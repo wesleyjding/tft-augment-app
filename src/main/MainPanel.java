@@ -1,6 +1,7 @@
 package main;
 
 import main.augmentStatGenerator.AugmentStatGenerator;
+import main.augmentStatGenerator.AugmentStatGeneratorObserver;
 import main.stageReader.StageReader;
 import main.tesseractOCR.TesseractOCR;
 
@@ -26,8 +27,9 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
             "4-1", "4-2a", "4-2b"));
 
     private AugmentStatGenerator asg = null;
+    private final AugmentStatGeneratorObserver asgo = new AugmentStatGeneratorObserver();
     private boolean begunBuilding = false;
-    private StageReader stageReader;
+    private final StageReader stageReader;
 
     public MainPanel() {
         timer.start();
@@ -93,14 +95,14 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
         // TODO: figure out how to close window while invokeLater() is running
         if(!begunBuilding) {
             try {
-                SwingUtilities.invokeLater(() -> asg = new AugmentStatGenerator());
+                SwingUtilities.invokeLater(() -> asg = new AugmentStatGenerator(asgo));
             } catch (Exception e) {
                 e.printStackTrace();
             }
             begunBuilding = true;
         }
         if(asg == null) {
-            g.drawString("Building Cache", 50, 50);
+            g.drawString("Building Cache: " + asgo.getCacheProgress() + "/290", 200, 20);
             return;
         }
 
@@ -169,7 +171,7 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
 
             } else if( s.equals("2-1b") || s.equals("3-2b") || s.equals("4-2b")) {
                 drawAugments(g);
-            } else if(stages.contains(s)){
+            } else if(stages.contains(s) || firstStages.contains(s)){
                 g.drawString("Not Augment Round", 100, 80);
             } else {
                 drawAugments(g);

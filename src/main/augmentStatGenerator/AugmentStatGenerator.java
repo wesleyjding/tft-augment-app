@@ -10,9 +10,9 @@ import java.util.HashMap;
 
 public class AugmentStatGenerator {
     private HashMap<String, String> stats;
-    public AugmentStatGenerator() {
+    public AugmentStatGenerator(AugmentStatGeneratorObserver observer) {
         stats = new HashMap<>(300); //TODO: adaptive size
-        initializeFiles();
+        initializeFiles(observer);
     }
 
     public String getAugmentStats(String name) {
@@ -22,7 +22,7 @@ public class AugmentStatGenerator {
         return "ERROR";
 
     }
-    public void initializeFiles() {
+    public void initializeFiles(AugmentStatGeneratorObserver observer) {
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
 
         System.out.println("Clearing Cache");
@@ -42,6 +42,10 @@ public class AugmentStatGenerator {
         button.click();
 
         for (int i = 1; i <= 290; i++) { //TODO: adaptive size, take out [champ names]
+            if(observer.isInterrupt()) {
+                return;
+            }
+
             int finalI = i;
             WebElement augment = new WebDriverWait(driver, Duration.ofSeconds(5))
                     .until(driver1 -> driver1.findElement(By.cssSelector(".z-10 > div:nth-child(" + finalI + ") > div:nth-child(1)")));
@@ -56,6 +60,7 @@ public class AugmentStatGenerator {
 
 
             stats.put(temp, augmentStats.getText());
+            observer.setCacheProgress(finalI);
         }
         System.out.println("Finished Building Cache");
 
