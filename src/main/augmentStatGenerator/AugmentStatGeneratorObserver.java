@@ -5,6 +5,7 @@ public class AugmentStatGeneratorObserver {
     private boolean interrupt;
 
     public AugmentStatGeneratorObserver() {
+        cacheProgress = 0;
         this.interrupt = false;
     }
 

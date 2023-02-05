@@ -1,6 +1,9 @@
 package main;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 public class TFTApp {
 
     public TFTApp() {
@@ -21,10 +24,18 @@ public class TFTApp {
     private void initComponents() {
         JFrame jFrame = new JFrame();
         MainPanel mainPanel = new MainPanel();
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         mainPanel.addKeyListener(mainPanel);
         mainPanel.setFocusable(true);
         jFrame.add(mainPanel);
+        jFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                mainPanel.onClose();
+                jFrame.setVisible(false);
+                jFrame.dispose();
+            }
+        });
+        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageIcon img = new ImageIcon("src/icon image.png");
         jFrame.setIconImage(img.getImage());
         jFrame.setTitle("TFT Project");

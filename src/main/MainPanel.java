@@ -11,11 +11,44 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 class MainPanel extends JPanel implements ActionListener, KeyListener {
+    class AugmentWorker extends SwingWorker<Void, Integer> {
+
+        private int total;
+        private AugmentStatGenerator generator;
+        private AugmentStatGeneratorObserver observer;
+        AugmentWorker(int total, AugmentStatGenerator generator, AugmentStatGeneratorObserver observer) {
+            this.total = total;
+            this.generator = generator;
+            this.observer = observer;
+        }
+        @Override
+        public Void doInBackground() {
+            while (!isCancelled()) {
+                generator.initializeFile(observer.getCacheProgress() + 1, observer);
+                int number = observer.getCacheProgress();
+                publish(number);
+                setProgress(100 * number / total);
+            }
+            return null;
+        }
+        /*
+        @Override
+        protected void process(ArrayList<Integer> chunks) {
+            for (int number : chunks) {
+                textArea.append(number + "\n");
+            }
+        }*/
+    }
+
+    private SwingWorker<Void, Integer> worker;
     private final int x;
     private final int y;
     Timer timer=new Timer(800, this); //TODO: timer back to 1000
@@ -94,15 +127,25 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
 
         // TODO: figure out how to close window while invokeLater() is running
         if(!begunBuilding) {
-            try {
-                SwingUtilities.invokeLater(() -> asg = new AugmentStatGenerator(asgo));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            asg = new AugmentStatGenerator();
+            JTextArea textArea = new JTextArea();
+            worker = new AugmentWorker(290, asg, asgo);
+            final JProgressBar progressBar = new JProgressBar(0, 100);
+            add(progressBar);
+            worker.addPropertyChangeListener(
+                    new PropertyChangeListener() {
+                        public void propertyChange(PropertyChangeEvent evt) {
+                            if ("progress".equals(evt.getPropertyName())) {
+                                progressBar.setValue((Integer) evt.getNewValue());
+                            }
+                        }
+                    });
+            worker.execute();
             begunBuilding = true;
         }
-        if(asg == null) {
-            g.drawString("Building Cache: " + asgo.getCacheProgress() + "/290", 200, 20);
+        if (asgo.getCacheProgress() < 290) {
+            g.drawString("Building Cache: ", 200, 200);
+            System.out.println(asgo.getCacheProgress());
             return;
         }
 
@@ -110,8 +153,8 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
 
         // https://stackoverflow.com/questions/35129457/how-to-check-if-a-process-is-running-on-windows TODO: fix this
         String findProcess = "League of Legends.exe";
-        String filenameFilter = "/nh /fi \"Imagename eq "+findProcess+"\"";
-        String tasksCmd = System.getenv("windir") +"/system32/tasklist.exe "+filenameFilter;
+        String filenameFilter = "/nh /fi \"Imagename eq " + findProcess + "\"";
+        String tasksCmd = System.getenv("windir") + "/system32/tasklist.exe " + filenameFilter;
         try {
             Process p = Runtime.getRuntime().exec(tasksCmd);
             BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -124,21 +167,19 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
             input.close();
 
             processFound = procs.stream().anyMatch(row -> row.contains(findProcess));
-            if(processFound) {
+            if (processFound) {
                 System.out.println("Process found");
-            }
-            else {
+            } else {
                 //System.out.println("Process not found");
             }
             // Head-up! If no processes were found - we still get:
             // "INFO: No tasks are running which match the specified criteria."
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println(e);
         }
 
 
-        if(processFound || true) { // TODO: take out true
+        if (processFound || true) { // TODO: take out true
             //BufferedImage screenImage = stageReader.getScreenStageImage();
             //BufferedImage firstScreenImage = stageReader.getScreenFirstStageImage();
             //g.drawImage(screenImage, 10, 10, this);
@@ -169,19 +210,21 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
                 }
                 drawAugments(g);
 
-            } else if( s.equals("2-1b") || s.equals("3-2b") || s.equals("4-2b")) {
+            } else if (s.equals("2-1b") || s.equals("3-2b") || s.equals("4-2b")) {
                 drawAugments(g);
-            } else if(stages.contains(s) || firstStages.contains(s)){
+            } else if (stages.contains(s) || firstStages.contains(s)) {
                 g.drawString("Not Augment Round", 100, 80);
             } else {
                 drawAugments(g);
             }
-        }
-        else {
+        } else {
             g.drawString("League of Legends not open", 200, 50);
         }
     }
-
+    public void onClose() {
+        worker.cancel(true);
+        worker = null;
+    }
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(1280, 720);
