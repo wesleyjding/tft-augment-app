@@ -1,4 +1,4 @@
-package tesseractOCR;
+package main.tesseractOCR;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

@@ -1,4 +1,4 @@
-package augmentStatGenerator;
+package main.augmentStatGenerator;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;

@@ -1,4 +1,4 @@
-package stageReader;
+package main.stageReader;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

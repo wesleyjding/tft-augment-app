@@ -1,7 +1,7 @@
-package enumeration;
-import static enumeration.EnumerateWindows.Kernel32.*;
-import static enumeration.EnumerateWindows.Psapi.*;
-import static enumeration.EnumerateWindows.User32DLL.*;
+package main.enumeration;
+import static main.enumeration.EnumerateWindows.Kernel32.*;
+import static main.enumeration.EnumerateWindows.Psapi.*;
+import static main.enumeration.EnumerateWindows.User32DLL.*;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HWND;
