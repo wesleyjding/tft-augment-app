@@ -46,9 +46,14 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
                 textArea.append(number + "\n");
             }
         }*/
+        @Override
+        public void done() {
+            generator.closeDriver();
+        }
     }
 
     private SwingWorker<Void, Integer> worker;
+    private final JProgressBar progressBar = new JProgressBar(0, 100);
     private final int x;
     private final int y;
     Timer timer=new Timer(800, this); //TODO: timer back to 1000
@@ -127,10 +132,9 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
 
         // TODO: figure out how to close window while invokeLater() is running
         if(!begunBuilding) {
+            g.drawString("Building Cache: ", 200, 200);
             asg = new AugmentStatGenerator();
-            JTextArea textArea = new JTextArea();
             worker = new AugmentWorker(290, asg, asgo);
-            final JProgressBar progressBar = new JProgressBar(0, 100);
             add(progressBar);
             worker.addPropertyChangeListener(
                     new PropertyChangeListener() {
@@ -148,7 +152,7 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
             System.out.println(asgo.getCacheProgress());
             return;
         }
-
+        remove(progressBar);
         boolean processFound = false;
 
         // https://stackoverflow.com/questions/35129457/how-to-check-if-a-process-is-running-on-windows TODO: fix this
@@ -222,6 +226,7 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
         }
     }
     public void onClose() {
+        System.out.println("Successfully closed");
         worker.cancel(true);
         worker = null;
     }
