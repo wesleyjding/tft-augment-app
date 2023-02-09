@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TFT Project:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TFT_Project_jar</output-path>
+    <root id="archive" name="TFT Project.jar">
+      <element id="module-output" name="TFT Project" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/jai-imageio-core-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/lept4j-1.17.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/tess4j-5.5.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-io-2.11.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/jna-platform-5.13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/selenium-server-4.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/htmlunit-driver-4.8.0-jar-with-dependencies.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/jna-5.13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/slf4j-api-2.0.6.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
