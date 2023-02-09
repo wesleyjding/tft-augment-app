@@ -32,9 +32,11 @@ public class AugmentStatGenerator {
 
     }
     public void closeDriver() {
-        System.out.println("Closed Driver");
-        driver.quit();
-        driver = null;
+        if(driver != null) {
+            System.out.println("Closed Driver");
+            driver.quit();
+            driver = null;
+        }
     }
     public void initializeFile(int row, AugmentStatGeneratorObserver observer) {
         WebElement augment = new WebDriverWait(driver, Duration.ofSeconds(5))

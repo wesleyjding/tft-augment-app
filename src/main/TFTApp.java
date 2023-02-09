@@ -36,7 +36,8 @@ public class TFTApp {
             }
         });
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon img = new ImageIcon("src/main/icon image.png");
+        System.out.println(System.getProperty("user.dir"));
+        ImageIcon img = new ImageIcon("main/icon image.png");
         jFrame.setIconImage(img.getImage());
         jFrame.setTitle("TFT Project");
         jFrame.pack();
