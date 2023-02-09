@@ -151,6 +151,7 @@ public class StageReader {
      */
     private BufferedImage getCompareImage(String stageNum) {
         ImageIcon icon = new ImageIcon("src/main/stageReader/Reference Stage Numbers/" + stageNum + ".png");
+        //getClass().getResource("images/icon.png").
         if(icon.getIconHeight() < 0) {
             //System.out.println("Stage number " + stageNum + " has no picture");
             icon = new ImageIcon("images/1-0.png");

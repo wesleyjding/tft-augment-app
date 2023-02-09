@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class AugmentStatGenerator {
     private HashMap<String, String> stats;
-    private final WebDriver driver;
+    private WebDriver driver;
     public AugmentStatGenerator() {
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
         stats = new HashMap<>(300); //TODO: adaptive size
@@ -32,7 +32,9 @@ public class AugmentStatGenerator {
 
     }
     public void closeDriver() {
+        System.out.println("Closed Driver");
         driver.quit();
+        driver = null;
     }
     public void initializeFile(int row, AugmentStatGeneratorObserver observer) {
         WebElement augment = new WebDriverWait(driver, Duration.ofSeconds(5))
