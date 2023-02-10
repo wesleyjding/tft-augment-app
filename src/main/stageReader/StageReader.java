@@ -1,5 +1,7 @@
 package main.stageReader;
 
+import main.TFTApp;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -7,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -150,21 +153,14 @@ public class StageReader {
      * @return Correct comparison image corresponding to the stage number
      */
     private BufferedImage getCompareImage(String stageNum) {
-        ImageIcon icon = new ImageIcon("src/main/stageReader/Reference Stage Numbers/" + stageNum + ".png");
-        System.out.println(getClass());
-        //.getResource("images/icon.png").
-        if(icon.getIconHeight() < 0) {
-            //System.out.println("Stage number " + stageNum + " has no picture");
-            icon = new ImageIcon("images/1-0.png");
+        //ImageIcon icon = new ImageIcon("src/main/stageReader/Reference Stage Numbers/" + stageNum + ".png");
+        BufferedImage image = null;
+        try {
+            InputStream in = TFTApp.class.getResourceAsStream("/main/stageReader/Reference Stage Numbers/" + stageNum + ".png");
+            image = ImageIO.read(in);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        // https://stackoverflow.com/questions/15053214/converting-an-imageicon-to-a-bufferedimage
-        BufferedImage image = new BufferedImage(
-                icon.getIconWidth(),
-                icon.getIconHeight(),
-                BufferedImage.TYPE_INT_RGB);
-        Graphics g = image.createGraphics();
-        icon.paintIcon(null, g, 0,0);
-        g.dispose();
         int x = image.getWidth(observer);
         int y = image.getHeight(observer);
         return image;
