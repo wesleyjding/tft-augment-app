@@ -52,7 +52,7 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
     private final JProgressBar progressBar = new JProgressBar(0, 100);
     private final int x;
     private final int y;
-    Timer timer=new Timer(800, this); //TODO: timer back to 1000
+    Timer timer=new Timer(800, this);
     private final ArrayList<String> curAugments = new ArrayList<>(Arrays.asList("", "", ""));
     private final ArrayList<String> curAugmentStats = new ArrayList<>(Arrays.asList("", "", ""));
     private final ArrayList<String> firstStages = new ArrayList<>(Arrays.asList("1-1", "1-2", "1-3", "1-4"));
@@ -129,7 +129,7 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
         if(!begunBuilding) {
             g.drawString("Building Cache: ", 200, 200);
             asg = new AugmentStatGenerator();
-            worker = new AugmentWorker(290, asg, asgo);
+            worker = new AugmentWorker(290, asg, asgo); //TODO: adaptive size
             add(progressBar);
             worker.addPropertyChangeListener(
                     evt -> {
