@@ -9,7 +9,7 @@ import java.time.Duration;
 import java.util.HashMap;
 
 public class AugmentStatGenerator {
-    private HashMap<String, String> stats;
+    private final HashMap<String, String> stats;
     private WebDriver driver;
     public AugmentStatGenerator() {
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
