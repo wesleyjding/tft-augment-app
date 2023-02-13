@@ -3,20 +3,17 @@ package main.stageReader;
 import main.TFTApp;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class StageReader {
     ImageObserver observer;
-    private final ArrayList<String> firstStages = new ArrayList<String>(Arrays.asList("1-1", "1-2", "1-3", "1-4"));
-    private final ArrayList<String> stages = new ArrayList<String>(Arrays.asList("2-1a", "2-1b", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7",
+    private final ArrayList<String> firstStages = new ArrayList<>(Arrays.asList("1-1", "1-2", "1-3", "1-4"));
+    private final ArrayList<String> stages = new ArrayList<>(Arrays.asList("2-1a", "2-1b", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7",
             "3-1", "3-2a", "3-2b", "3-3", "3-4", "3-5", "3-6", "3-7",
             "4-1", "4-2a", "4-2b"));
 
@@ -64,7 +61,7 @@ public class StageReader {
      * @return cropped image of screen containing the stage number (only for stage 1)
      */
     public BufferedImage getScreenFirstStageImage() {
-        Robot screen = null;
+        Robot screen;
         try {
             screen = new Robot();
         } catch (AWTException e) {
@@ -77,7 +74,7 @@ public class StageReader {
      * @return cropped image of screen containing the stage number (only for stage 2+)
      */
     public BufferedImage getScreenStageImage() {
-        Robot screen = null;
+        Robot screen;
         try {
             screen = new Robot();
         } catch (AWTException e) {
@@ -92,7 +89,7 @@ public class StageReader {
      * @return cropped image of screen containing the first augment selection
      */
     public BufferedImage getScreenFirstAugmentImage() {
-        Robot screen = null;
+        Robot screen;
         try {
             screen = new Robot();
         } catch (AWTException e) {
@@ -108,7 +105,7 @@ public class StageReader {
      * @return cropped image of screen containing the second augment selection
      */
     public BufferedImage getScreenSecondAugmentImage() {
-        Robot screen = null;
+        Robot screen;
         try {
             screen = new Robot();
         } catch (AWTException e) {
@@ -123,7 +120,7 @@ public class StageReader {
      * @return cropped image of screen containing the third augment selection
      */
     public BufferedImage getScreenThirdAugmentImage() {
-        Robot screen = null;
+        Robot screen;
         try {
             screen = new Robot();
         } catch (AWTException e) {
@@ -135,20 +132,6 @@ public class StageReader {
     }
 
     /**
-     * @param image Image to be saved
-     * @param name Name of the file
-     */ //TODO: Probably can remove this method later
-    private void saveImage(BufferedImage image, String name) {
-        try {
-            File outputfile = new File(name);
-            ImageIO.write(image, "png", outputfile);
-            System.out.println("Saved Image " + name);
-        } catch (IOException e) {
-            System.out.println("ImageIO Exception: " + e);
-        }
-    }
-
-    /**
      * @param stageNum TFT stage number for comparison
      * @return Correct comparison image corresponding to the stage number
      */
@@ -157,12 +140,11 @@ public class StageReader {
         BufferedImage image = null;
         try {
             InputStream in = TFTApp.class.getResourceAsStream("/main/stageReader/Reference Stage Numbers/" + stageNum + ".png");
+            assert in != null;
             image = ImageIO.read(in);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int x = image.getWidth(observer);
-        int y = image.getHeight(observer);
         return image;
     }
 
