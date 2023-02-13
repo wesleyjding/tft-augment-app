@@ -6,8 +6,10 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+// modified from https://www.selenium.dev/documentation/webdriver/getting_started/first_script/
 public class AugmentStatGenerator {
     private final HashMap<String, String> stats;
     private WebDriver driver;
@@ -19,6 +21,13 @@ public class AugmentStatGenerator {
         options.addArguments("--headless",  "--window-size=1920,1080", "--silent", "--ignore-certificate-errors");
         driver = new ChromeDriver(options); // Maybe HtmlUnitDriver for headless?
         driver.get("https://tactics.tools/augments");
+
+        WebElement table = new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(driver1 -> driver1.findElement(By.cssSelector(".z-10")));
+        ArrayList<WebElement> elements = (ArrayList<WebElement>) new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(driver1 -> table.findElements(By.tagName(".z-10 > div:nth-child(1)")));
+        System.out.println(elements.size());
+
         WebElement button = new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(driver1 -> driver1.findElement(By.cssSelector(".css-11tbvfe > div:nth-child(1)")));
         button.click();
