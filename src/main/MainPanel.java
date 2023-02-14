@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 class MainPanel extends JPanel implements ActionListener, KeyListener {
     class AugmentWorker extends SwingWorker<Void, Integer> {
-
+        //TODO: improve GUI
         private final int total;
         private final AugmentStatGenerator generator;
         private final AugmentStatGeneratorObserver observer;
