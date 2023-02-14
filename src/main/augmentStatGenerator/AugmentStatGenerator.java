@@ -12,10 +12,10 @@ import java.util.HashMap;
 // modified from https://www.selenium.dev/documentation/webdriver/getting_started/first_script/
 public class AugmentStatGenerator {
     private final HashMap<String, String> stats;
+    private final int totalAugments;
     private WebDriver driver;
     public AugmentStatGenerator() {
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
-        stats = new HashMap<>(300); //TODO: adaptive size
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless",  "--window-size=1920,1080", "--silent", "--ignore-certificate-errors");
@@ -24,9 +24,11 @@ public class AugmentStatGenerator {
 
         WebElement table = new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(driver1 -> driver1.findElement(By.cssSelector(".z-10")));
+        // modified from https://stackoverflow.com/questions/50870939/selenium-get-the-div-count-inside-another-div
         ArrayList<WebElement> elements = (ArrayList<WebElement>) new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(driver1 -> table.findElements(By.tagName(".z-10 > div:nth-child(1)")));
-        System.out.println(elements.size());
+                .until(driver1 -> table.findElements(By.xpath("//*[@class='sticky left-0 z-10 tbl-body-inner-md pl-[4px] css-3cf96d']/div")));
+        totalAugments = elements.size();
+        stats = new HashMap<>(totalAugments + 1);
 
         WebElement button = new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(driver1 -> driver1.findElement(By.cssSelector(".css-11tbvfe > div:nth-child(1)")));
@@ -61,4 +63,7 @@ public class AugmentStatGenerator {
         observer.setCacheProgress(row);
     }
 
+    public int getTotalAugments() {
+        return totalAugments;
+    }
 }

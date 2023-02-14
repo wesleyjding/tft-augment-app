@@ -129,7 +129,7 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
         if(!begunBuilding) {
             g.drawString("Building Cache: ", 200, 200);
             asg = new AugmentStatGenerator();
-            worker = new AugmentWorker(290, asg, asgo); //TODO: adaptive size
+            worker = new AugmentWorker(asg.getTotalAugments(), asg, asgo);
             add(progressBar);
             worker.addPropertyChangeListener(
                     evt -> {
@@ -140,7 +140,7 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
             worker.execute();
             begunBuilding = true;
         }
-        if (asgo.getCacheProgress() < 290) {
+        if (asgo.getCacheProgress() < asg.getTotalAugments()) {
             g.drawString("Building Cache: ", 200, 200);
             //System.out.println(asgo.getCacheProgress());
             return;
