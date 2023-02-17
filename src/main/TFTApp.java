@@ -43,6 +43,7 @@ public class TFTApp {
             System.exit(-1);
         }
         jFrame.setIconImage(img.getImage());
+        jFrame.setResizable(false);
         jFrame.setTitle("TFT Project");
         jFrame.pack();
         jFrame.setLocationRelativeTo(null);
