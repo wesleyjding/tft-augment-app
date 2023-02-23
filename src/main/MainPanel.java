@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 class MainPanel extends JPanel implements ActionListener, KeyListener {
-    class AugmentWorker extends SwingWorker<Void, Integer> {
+    static class AugmentWorker extends SwingWorker<Void, Integer> {
         //TODO: improve GUI
         private final int total;
         private final AugmentStatGenerator generator;
@@ -36,13 +36,6 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
             }
             return null;
         }
-        /*
-        @Override
-        protected void process(ArrayList<Integer> chunks) {
-            for (int number : chunks) {
-                textArea.append(number + "\n");
-            }
-        }*/
         @Override
         public void done() {
             generator.closeDriver();
@@ -51,6 +44,7 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
 
     private SwingWorker<Void, Integer> worker;
     private final JProgressBar progressBar = new JProgressBar(0, 100);
+    private final Font font = new Font("Serif", Font.PLAIN, 20);
     private final HashMap<String, JLabel> textLabels = new HashMap<>();
     private final int x;
     private final int y;
@@ -111,42 +105,51 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
 
     private void writeAugments() {
         Dimension frameSize = this.getSize();
-        //TODO: Newline in JLabel, change size and formatting
+        //TODO: change size and formatting
         JLabel augLabel1 = textLabels.get("Aug1");
+        String text = curAugments.get(0) + "\n" + curAugmentStats.get(0);
         if(augLabel1 == null) {
-            augLabel1 = new JLabel(curAugments.get(0) + curAugmentStats.get(0));
+            augLabel1 = new JLabel("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
+            augLabel1.setFont(font);
             Dimension size = augLabel1.getPreferredSize();
             add(augLabel1);
-            augLabel1.setBounds(frameSize.width/4 - size.width/2, frameSize.height/2 - size.width/2, size.width, size.height);
+            augLabel1.setBounds(frameSize.width/6 - size.width/2, frameSize.height/2, size.width, size.height);
+            augLabel1.setHorizontalAlignment(SwingConstants.CENTER);
             textLabels.put("Aug1", augLabel1);
         }
         else {
-            augLabel1.setText(curAugments.get(0) + curAugmentStats.get(0));
+            augLabel1.setText("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
 
         }
 
         JLabel augLabel2 = textLabels.get("Aug2");
+        text = curAugments.get(1) + "\n" + curAugmentStats.get(1);
         if(augLabel2 == null) {
-            augLabel2 = new JLabel(curAugments.get(1) + curAugmentStats.get(1));
+            augLabel2 = new JLabel("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
+            augLabel2.setFont(font);
             Dimension size = augLabel2.getPreferredSize();
             add(augLabel2);
-            augLabel2.setBounds(frameSize.width/2 - size.width/2, frameSize.height/2 - size.width/2, size.width, size.height);
+            augLabel2.setBounds(frameSize.width/2 - size.width/2, frameSize.height/2, size.width, size.height);
+            augLabel2.setHorizontalAlignment(SwingConstants.CENTER);
             textLabels.put("Aug2", augLabel2);
         }
         else {
-            augLabel2.setText(curAugments.get(1) + curAugmentStats.get(1));
+            augLabel2.setText("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
         }
 
         JLabel augLabel3 = textLabels.get("Aug3");
+        text = curAugments.get(2) + "\n" + curAugmentStats.get(2);
         if(augLabel3 == null) {
-            augLabel3 = new JLabel(curAugments.get(2) + curAugmentStats.get(2));
+            augLabel3 = new JLabel("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
+            augLabel3.setFont(font);
             Dimension size = augLabel3.getPreferredSize();
             add(augLabel3);
-            augLabel3.setBounds(3 * frameSize.width/4 - size.width/2, frameSize.height/2 - size.width/2, size.width, size.height);
+            augLabel3.setBounds(5 * frameSize.width/6 - size.width/2, frameSize.height/2, size.width, size.height);
+            augLabel3.setHorizontalAlignment(SwingConstants.CENTER);
             textLabels.put("Aug3", augLabel3);
         }
         else {
-            augLabel3.setText(curAugments.get(2) + curAugmentStats.get(2));
+            augLabel3.setText("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
         }
         if(!augLabel1.isVisible()) {
             augLabel1.setVisible(true);
@@ -222,7 +225,7 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
             stageLabel = new JLabel("Stage: " + s);
             Dimension size = stageLabel.getPreferredSize();
             add(stageLabel);
-            stageLabel.setBounds(frameSize.width/10, frameSize.height/10, size.width, size.height);
+            stageLabel.setBounds(frameSize.width/20, frameSize.height/20, size.width, size.height);
             textLabels.put("Stage Number", stageLabel);
         }
         else {
