@@ -45,10 +45,10 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
     private SwingWorker<Void, Integer> worker;
     private final JProgressBar progressBar = new JProgressBar(0, 100);
     private final Font font = new Font("Serif", Font.PLAIN, 20);
-    private final HashMap<String, JLabel> textLabels = new HashMap<>();
     private final int x;
     private final int y;
     Timer timer=new Timer(800, this);
+    private final HashMap<String, JLabel> textLabels = new HashMap<>();
     private final ArrayList<String> curAugments = new ArrayList<>(Arrays.asList("", "", ""));
     private final ArrayList<String> curAugmentStats = new ArrayList<>(Arrays.asList("", "", ""));
     private final ArrayList<String> firstStages = new ArrayList<>(Arrays.asList("1-1", "1-2", "1-3", "1-4"));
