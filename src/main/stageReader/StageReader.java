@@ -136,7 +136,6 @@ public class StageReader {
      * @return Correct comparison image corresponding to the stage number
      */
     private BufferedImage getCompareImage(String stageNum) {
-        //ImageIcon icon = new ImageIcon("src/main/stageReader/Reference Stage Numbers/" + stageNum + ".png");
         BufferedImage image = null;
         try {
             InputStream in = TFTApp.class.getResourceAsStream("/main/stageReader/Reference Stage Numbers/" + stageNum + ".png");
