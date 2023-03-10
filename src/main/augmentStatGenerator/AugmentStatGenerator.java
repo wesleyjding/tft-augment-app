@@ -1,6 +1,7 @@
 package main.augmentStatGenerator;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,7 +19,7 @@ public class AugmentStatGenerator {
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless",  "--window-size=1920,1080", "--silent", "--ignore-certificate-errors");
+        options.addArguments("--headless",  "--window-size=1920,1080", "--silent", "--ignore-certificate-errors", "--remote-allow-origins=*");
         driver = new ChromeDriver(options); // Maybe HtmlUnitDriver for headless?
         driver.get("https://tactics.tools/augments");
 
