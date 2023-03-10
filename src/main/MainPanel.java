@@ -64,10 +64,10 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
 
     public MainPanel() {
         timer.start();
-        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = Toolkit.getDefaultToolkit().getScreenSize();
         stageReader = new StageReader(this);
-        x = size.width;
-        y = size.height;
+        x = frameSize.width;
+        y = frameSize.height;
         setLayout(null);
     }
 
@@ -182,7 +182,9 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
         drawBackground(g);
 
         if(!begunBuilding) {
+            begunBuilding = true;
             Dimension frameSize = this.getSize();
+
             asg = new AugmentStatGenerator();
             worker = new AugmentWorker(asg.getTotalAugments(), asg, asgo);
 
@@ -204,7 +206,6 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
                         }
                     });
             worker.execute();
-            begunBuilding = true;
         }
         if (asgo.getCacheProgress() < asg.getTotalAugments()) {
             //System.out.println(asgo.getCacheProgress());
