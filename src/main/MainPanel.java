@@ -119,7 +119,8 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
         }
         else {
             augLabel1.setText("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
-
+            Dimension size = augLabel1.getPreferredSize();
+            augLabel1.setBounds(5 * frameSize.width/6 - size.width/2, frameSize.height/2, size.width, size.height);
         }
 
         JLabel augLabel2 = textLabels.get("Aug2");
@@ -135,6 +136,8 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
         }
         else {
             augLabel2.setText("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
+            Dimension size = augLabel2.getPreferredSize();
+            augLabel2.setBounds(5 * frameSize.width/6 - size.width/2, frameSize.height/2, size.width, size.height);
         }
 
         JLabel augLabel3 = textLabels.get("Aug3");
@@ -150,6 +153,8 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
         }
         else {
             augLabel3.setText("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
+            Dimension size = augLabel3.getPreferredSize();
+            augLabel3.setBounds(5 * frameSize.width/6 - size.width/2, frameSize.height/2, size.width, size.height);
         }
         if(!augLabel1.isVisible()) {
             augLabel1.setVisible(true);
@@ -235,9 +240,6 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
 
 
         if (s.equals("2-1a") || s.equals("3-2a") || s.equals("4-2a")) {
-            g.drawImage(stageReader.getScreenFirstAugmentImage(), 10, 80, this);
-            g.drawImage(stageReader.getScreenSecondAugmentImage(), 410, 80, this);
-            g.drawImage(stageReader.getScreenThirdAugmentImage(), 810, 80, this);
 
             String firstAugment = getFirstAugmentName();
             if (!curAugments.get(0).equals(firstAugment) && !asg.getAugmentStats(firstAugment).equals("ERROR")) {
