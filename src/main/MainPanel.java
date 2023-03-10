@@ -120,7 +120,7 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
         else {
             augLabel1.setText("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
             Dimension size = augLabel1.getPreferredSize();
-            augLabel1.setBounds(5 * frameSize.width/6 - size.width/2, frameSize.height/2, size.width, size.height);
+            augLabel1.setBounds(frameSize.width/6 - size.width/2, frameSize.height/2, size.width, size.height);
         }
 
         JLabel augLabel2 = textLabels.get("Aug2");
@@ -137,7 +137,7 @@ class MainPanel extends JPanel implements ActionListener, KeyListener {
         else {
             augLabel2.setText("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
             Dimension size = augLabel2.getPreferredSize();
-            augLabel2.setBounds(5 * frameSize.width/6 - size.width/2, frameSize.height/2, size.width, size.height);
+            augLabel2.setBounds(frameSize.width/2 - size.width/2, frameSize.height/2, size.width, size.height);
         }
 
         JLabel augLabel3 = textLabels.get("Aug3");
