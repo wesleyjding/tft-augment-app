@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+// uses https://docs.oracle.com/javase/7/docs/api/java/awt/Robot.html
 public class StageReader {
     ImageObserver observer;
     private final ArrayList<String> firstStages = new ArrayList<>(Arrays.asList("1-1", "1-2", "1-3", "1-4"));

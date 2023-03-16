@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
+// modified from https://docs.oracle.com/javase/7/docs/api/javax/swing/JFrame.html
 public class TFTApp {
 
     public TFTApp() {
@@ -21,7 +22,6 @@ public class TFTApp {
         JFrame jFrame = new JFrame();
         MainPanel mainPanel = new MainPanel();
 
-        mainPanel.addKeyListener(mainPanel);
         mainPanel.setFocusable(true);
         jFrame.add(mainPanel);
         jFrame.addWindowListener(new WindowAdapter() {
